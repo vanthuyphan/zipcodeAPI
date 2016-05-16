@@ -15,3 +15,11 @@ bower install
 #!shell
 node vsell_dev.js
 ```
+
+## Recommended Sublime Text Plugins ##
+* Color Highlighter
+* CSS Extended Completions
+* DocBlockr
+* LESS
+* SideBarEnhancements
+* DocBlockr
