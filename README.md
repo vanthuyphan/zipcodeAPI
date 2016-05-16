@@ -22,4 +22,3 @@ node vsell_dev.js
 * DocBlockr
 * LESS
 * SideBarEnhancements
-* DocBlockr
