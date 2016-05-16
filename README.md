@@ -23,3 +23,4 @@ node vsell_dev.js
 * LESS 
 * SideBarEnhancements : Help copying file path.
 * HTML-CSS-JS Prettify : Ctr + Shift + H => code formating
+* INI
