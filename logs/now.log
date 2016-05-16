@@ -1,0 +1,12 @@
+[2016-05-16 11:40:37.572] [INFO] console - [web]  localhost:8000
+[2016-05-16 11:40:37.577] [INFO] console - [routes]
+[2016-05-16 11:40:37.583] [INFO] console - App link: http://localhost:8000			// Public url, exposed to Internet
+[2016-05-16 11:40:37.584] [INFO] console - App link: http://localhost:8000			// Public url, exposed to Internet
+[2016-05-16 11:41:27.207] [INFO] console - [web]  localhost:8000
+[2016-05-16 11:41:27.212] [INFO] console - [routes]
+[2016-05-16 11:41:27.217] [INFO] console - App link: http://localhost:8000			# Public url, exposed to Internet
+[2016-05-16 11:41:27.217] [INFO] console - App link: http://localhost:8000			# Public url, exposed to Internet
+[2016-05-16 11:41:39.575] [INFO] console - [web]  localhost:8000
+[2016-05-16 11:41:39.581] [INFO] console - [routes]
+[2016-05-16 11:41:39.587] [INFO] console - App link: http://localhost:8000			! Public url, exposed to Internet
+[2016-05-16 11:41:39.587] [INFO] console - App link: http://localhost:8000			! Public url, exposed to Internet
