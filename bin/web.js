@@ -8,6 +8,8 @@ var lessMiddleware = require('less-middleware');
 var SessionSqlStore = require("./now/SessionSqlStore");
 var session = require('express-session');
 
+var bodyParser     =        require("body-parser");
+
 var router = require("./router");
 
 
@@ -22,6 +24,9 @@ function setup() {
     web.use("/public", lessMiddleware('public'));
     web.use("/public", express.static("public"));
     web.locals.pretty = true;
+
+    web.use(bodyParser.urlencoded({ extended: false }));
+    web.use(bodyParser.json());
 
     web.use(session({
         resave: false,

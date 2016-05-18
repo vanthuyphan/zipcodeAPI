@@ -2,46 +2,32 @@ extend ./layout.jade
 block head
 
 block content
-	.container.user-input
-		.row
-		form(role='form')#example-basic
-			h3 Account
-			section
+	.container#login-from
+		.row.col-xs-1.col-md-3
+		.row.col-xs-12.col-md-4
+			.err=err
+			form(role='form' action="/register" method="POST")
 				.form-group
-					label(for='name') Name:
-					input#name.form-control(type='name')
+					label(for='name') Tên :
+					input#name.form-control(type='name' name="name")
 				.form-group
 					label(for='email') Email:
-					input#email.form-control(type='email')
+					input#email.form-control(type='email'  name="email")
 				.form-group
-					label(for='password') Password:
-					input#password.form-control(type='password')
-			h3 Area
-			section
+					label(for='password') Mật khẩu:
+					input#password.form-control(type='password' name="password")
 				.form-group
-					label(for='pwd') Password:
-					input#pwd.form-control(type='password')
-				.checkbox
-					label
-						input(type='checkboex')
-						|  Remember me
-			h3 Product
-			section
-				button.btn.btn-default(type='submit') Submit
-
+					button.btn.btn-primary() Đăng ký
 
 block page-script
-	link(rel="stylesheet" href="/bower_components/jquery.steps/demo/css/normalize.css")
-	link(rel="stylesheet" href="/bower_components/jquery.steps/demo/css/main.css")
-	link(rel="stylesheet" href="/bower_components/jquery.steps/demo/css/jquery.steps.css")
-	script(src="/bower_components/jquery.steps/build/jquery.steps.js")
-	script.
-		$(function() {
-			$("#example-basic").steps({
-				headerTag: "h3",
-				bodyTag: "section",
-				transitionEffect: "slideLeft",
-				autoFocus: true,
-				titleTemplate: '<span class="mystep">#index#.</span> #title#'
-			});
-		});
+	style.
+		#login-from {
+			margin-top: 150px;
+		}
+		button {
+			margin-top : 5px;
+		}
+		.err {
+			margin: 5px;
+			color: red;
+		}

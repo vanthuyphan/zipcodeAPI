@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `User` (
 	`name` NVARCHAR(100),
 	`gender` INT(2),
 	`phone` NVARCHAR(20),
+	`password` NVARCHAR(100),
 	PRIMARY KEY (`code`)
 ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 

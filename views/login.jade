@@ -1,0 +1,33 @@
+extend ./layout.jade
+block head
+
+block content
+	.container#login-from
+		.row.col-xs-1.col-md-3
+		.row.col-xs-12.col-md-4
+			form(role='form')
+				.form-group
+					label(for='email') Email:
+					input#email.form-control(type='email')
+				.form-group
+					label(for='password') Mật khẩu:
+					input#password.form-control(type='password')
+				.form-group
+					button.btn.btn-primary() Đăng nhập
+					a.btn.btn-link(href="/register") Đăng ký
+		.row.col-xs-1.col-md-1
+		.row.col-xs-4.col-md-4
+			form(role='form')
+				.form-group
+					label(for='email') 
+					button.btn.btn-danger() Google
+					button.btn.btn-info() Facebook
+
+block page-script
+	style.
+		#login-from {
+			margin-top: 150px;
+		}
+		button {
+			margin-top : 5px;
+		}
