@@ -1,18 +1,20 @@
 {
-	"name": "vsell",
-	"version": "1.0.0",
-	"description": "A powerful tool helps sellers and suppliers connect each others efficiently.",
-	"main": "vsell_pro.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"author": "Ordinary!",
-	"license": "ISC",
-	"dependencies": {
-		"express": "^4.13.4",
-		"jade": "^1.11.0",
-		"less-middleware": "^2.1.0",
-		"log4js": "^0.6.36",
-		"node-ini": "^1.0.0"
-	}
+  "name": "vsell",
+  "version": "1.0.0",
+  "description": "A powerful tool helps sellers and suppliers connect each others efficiently.",
+  "main": "vsell_pro.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ordinary!",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "jade": "^1.11.0",
+    "less-middleware": "^2.1.0",
+    "log4js": "^0.6.36",
+    "mysql": "^2.10.2",
+    "node-ini": "^1.0.0"
+  }
 }

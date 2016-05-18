@@ -1,7 +1,8 @@
-
 var ini = require("./bin/now/ini.js");
 var logger = require("./bin/now/logger.js");
+var mysql = require("./bin/now/mysql.js");
 var web = require("./bin/web.js");
+var db = require("./bin/db.js");
 
 
 
@@ -22,10 +23,18 @@ exports.init = function(iniFile, app) {
         logger.init(now, function(err) {
             if (err) throw err;
 
-            web.init(now, function(err) {
+            mysql.init(now, function(err) {
                 if (err) throw err;
 
-                console.log("App link: %s", now.ini.web.url);
+                db.init(now, function(err) {
+                    if (err) throw err;
+
+                    web.init(now, function(err) {
+                        if (err) throw err;
+
+                        console.log("App link: %s", now.ini.web.url);
+                    });
+                });
             });
         });
     });

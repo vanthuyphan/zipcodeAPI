@@ -16,12 +16,21 @@ exports.init = function(_now, cb) {
 };
 
 
-router.get("/", function (req, res) {
+router.get("/", function(req, res) {
     res.render("index");
 });
 
 
-router.get("/register", function (req, res) {
+router.get("/register", function(req, res) {
+
     res.render("register");
 });
 
+
+router.get("/find/:code", function(req, res) {
+    now.db.getUserByCode(req.params.code, function(err, row) {
+    	if (err) throw err;
+
+    	res.send(row || "Not Found!");
+    });
+});

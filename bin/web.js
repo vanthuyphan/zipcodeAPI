@@ -5,6 +5,9 @@ var http = require('http');
 var https = require('https');
 var lessMiddleware = require('less-middleware');
 
+var SessionSqlStore = require("./now/SessionSqlStore");
+var session = require('express-session');
+
 var router = require("./router");
 
 
@@ -19,6 +22,16 @@ function setup() {
     web.use("/public", lessMiddleware('public'));
     web.use("/public", express.static("public"));
     web.locals.pretty = true;
+
+    web.use(session({
+        resave: false,
+        saveUninitialized: true,
+        secret: 'blablablabla',
+        store: new SessionSqlStore({
+            now: now,
+            timeout: 3000
+        })
+    }));
 };
 
 exports.init = function(_now, cb) {
