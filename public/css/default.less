@@ -5,6 +5,10 @@
  */
 
 @MAIN_COLOR: #9FD632;
+@COLOR_2 : green;
+
+@COLOR_3 : green;
+
 body {
     overflow-x: hidden;
     font-family: "Roboto Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -43,7 +47,7 @@ a:hover,
 a:focus,
 a:active,
 a.active {
-    color: #fec503;
+    color: @COLOR_2;
 }
 
 h1,
@@ -84,8 +88,8 @@ h6 {
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
     color: #ffffff;
-    background-color: #fec503;
-    border-color: #f6bf01;
+    background-color: @COLOR_2;
+    border-color: @COLOR_3;
 }
 
 .btn-primary:active,
@@ -136,8 +140,8 @@ fieldset[disabled] .btn-primary.active {
 .btn-xl.active,
 .open .dropdown-toggle.btn-xl {
     color: #ffffff;
-    background-color: #fec503;
-    border-color: #f6bf01;
+    background-color: @COLOR_2;
+    border-color: @COLOR_3;
 }
 
 .btn-xl:active,
@@ -184,7 +188,7 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default .navbar-brand:focus,
 .navbar-default .navbar-brand:active,
 .navbar-default .navbar-brand.active {
-    color: #fec503;
+    color: @COLOR_2;
 }
 
 .navbar-default .navbar-collapse {
@@ -228,7 +232,7 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
     color: white;
-    background-color: #fec503;
+    background-color: @COLOR_2;
 }
 
 @media (min-width: 768px) {

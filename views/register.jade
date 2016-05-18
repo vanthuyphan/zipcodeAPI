@@ -1,0 +1,72 @@
+extend ./layout.jade
+block head
+	style.
+		body {
+			background-color: #777777;
+		}
+		.user-input {
+			margin-top: 100px;
+		}
+
+block body
+	nav.navbar.navbar-default.navbar-fixed-top.navbar-shrink
+		.container
+			// Brand and toggle get grouped for better mobile display
+			.navbar-header.page-scroll
+				button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+					span.sr-only Toggle navigation
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				a.navbar-brand.page-scroll(href='/') 
+					| vSell Group
+			// Collect the nav links, forms, and other content for toggling
+			#bs-example-navbar-collapse-1.collapse.navbar-collapse
+				ul.nav.navbar-nav.navbar-right
+					li.hidden
+						a(href='#page-top')
+					li
+						a.page-scroll(href='#about') About
+	.container.user-input
+		.row
+		form(role='form')#example-basic
+			h3 Account
+			section
+				.form-group
+					label(for='name') Name:
+					input#name.form-control(type='name')
+				.form-group
+					label(for='email') Email:
+					input#email.form-control(type='email')
+				.form-group
+					label(for='password') Password:
+					input#password.form-control(type='password')
+			h3 Area
+			section
+				.form-group
+					label(for='pwd') Password:
+					input#pwd.form-control(type='password')
+				.checkbox
+					label
+						input(type='checkboex')
+						|  Remember me
+			h3 Product
+			section
+				button.btn.btn-default(type='submit') Submit
+
+
+block page-script
+	link(rel="stylesheet" href="/bower_components/jquery.steps/demo/css/normalize.css")
+	link(rel="stylesheet" href="/bower_components/jquery.steps/demo/css/main.css")
+	link(rel="stylesheet" href="/bower_components/jquery.steps/demo/css/jquery.steps.css")
+	script(src="/bower_components/jquery.steps/build/jquery.steps.js")
+	script.
+		$(function() {
+			$("#example-basic").steps({
+				headerTag: "h3",
+				bodyTag: "section",
+				transitionEffect: "slideLeft",
+				autoFocus: true,
+				titleTemplate: '<span class="mystep">#index#.</span> #title#'
+			});
+		});
