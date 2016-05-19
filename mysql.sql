@@ -46,8 +46,5 @@ CREATE TABLE IF NOT EXISTS `Oauth` (
 
 
 
-
-
-
 INSERT INTO `User` VALUES (1, 'v4n', 'van@gmail.com', 'Van Phan', 0, '12345');
-
+INSERT INTO `User` VALUES (1, 'v4n', 'van@gmail.com', 'Van Phan', 0, '12345', '12345');
