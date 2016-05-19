@@ -19,6 +19,7 @@ function setupRegister() {
 
     function checkLogged(req, res, next) {
         if(req.user && req.user.code) {
+            console.info(req.user);
             res.redirect("/");
             return;
         }
@@ -124,7 +125,7 @@ function setupPassport() {
     };
 
     function exportOauthProfile(provider, profile) {
-        console.debug(profile);
+        // console.debug(profile);
         return {
             provider: provider,
             profile: {
