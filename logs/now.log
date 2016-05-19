@@ -10,3 +10,22 @@
 [2016-05-16 11:41:39.581] [INFO] console - [routes]
 [2016-05-16 11:41:39.587] [INFO] console - App link: http://localhost:8000			! Public url, exposed to Internet
 [2016-05-16 11:41:39.587] [INFO] console - App link: http://localhost:8000			! Public url, exposed to Internet
+[2016-05-19 06:00:55.697] [INFO] console - [now.mysql] localhost:3306/cafe2s_pro
+[2016-05-19 06:01:58.237] [INFO] console - [now.mysql] 0.0.0.0:3306/cafe2s_pro
+[2016-05-19 06:03:56.693] [INFO] console - [now.mysql] 0.0.0.0:3306/cafe2s_pro
+[2016-05-19 06:05:11.863] [INFO] console - [now.mysql] localhost:3306/cafe2s_pro
+[2016-05-19 06:06:56.927] [INFO] console - [now.mysql] localhost:3306/cafe2s_pro
+[2016-05-19 06:06:57.009] [INFO] console - [web]  localhost:8000
+[2016-05-19 06:06:57.035] [INFO] console - [routes]
+[2016-05-19 06:06:57.045] [INFO] console - App link: http://cafe2s.com
+[2016-05-19 06:15:39.162] [INFO] console - [now.mysql] localhost:3306/cafe2s_pro
+[2016-05-19 06:15:39.238] [INFO] console - [web]  localhost:8000
+[2016-05-19 06:15:39.253] [INFO] console - [routes]
+[2016-05-19 06:15:39.262] [INFO] console - App link: http://cafe2s.com
+[2016-05-19 06:16:04.852] [INFO] console - { code: 1,
+  id: null,
+  email: 'nguyentunam@gmail.com',
+  name: 'Nam Nguyễn',
+  gender: null,
+  phone: null,
+  password: '1234qwer' }
