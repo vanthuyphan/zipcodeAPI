@@ -1,0 +1,25 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title Error
+        meta(name='msapplication-TileColor', content='#5bc0de')
+        meta(name='msapplication-TileImage', content='../public/img/metis-tile.png')
+        // Metis core stylesheet
+        include ./libs.jade
+        style.
+            body {
+                direction: rtl;
+            }
+    body.error
+        .container
+            .col-lg-8.col-lg-offset-2.text-center
+                .logo
+                    h1 Error occurred
+                p.lead.text-muted .
+                .clearfix
+                br
+                .col-lg-6.col-lg-offset-3
+                    .btn-group.btn-group-justified
+                        a.btn.btn-warning(href='/') Click here to go back to website
+            // /.col-lg-8 col-offset-2
