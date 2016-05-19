@@ -18,7 +18,7 @@ exports.init = function (_now, cb) {
 function setupRegister() {
 
     function checkLogged(req, res, next) {
-        if(req.user && req.user.code) {
+        if (req.user && req.user.code) {
             console.info(req.user);
             res.redirect("/");
             return;
@@ -26,7 +26,7 @@ function setupRegister() {
         next();
     }
 
-    now.web.get("/register", checkLogged, function(req, res) {
+    now.web.get("/register", checkLogged, function (req, res) {
         var model;
         if (req.user && req.user.oauth) {
             model = req.user.oauth.profile;
@@ -34,7 +34,7 @@ function setupRegister() {
         res.render("register", model);
     });
 
-    now.web.post("/register", checkLogged,  function(req, res, next) {
+    now.web.post("/register", checkLogged, function (req, res, next) {
         var input = req.body;
 
         if (!input.name || !input.email || !input.password) {
@@ -43,7 +43,7 @@ function setupRegister() {
             return;
         }
 
-        db.insertUser(req.body, function(err, row) {
+        db.insertUser(req.body, function (err, row) {
 
             if (err) {
                 if (err.code === 'ER_DUP_ENTRY') {
@@ -65,7 +65,7 @@ function setupRegister() {
                     userCode: row.code,
                     profileId: req.user.oauth.profile.id,
                     provider: req.user.oauth.provider
-                }, function(err) {
+                }, function (err) {
                     if (err) return next(err);
 
                     req.session.passport.user = req.body;
@@ -78,11 +78,68 @@ function setupRegister() {
         });
     });
 
-    now.web.get("/login", checkLogged, function(req, res) {
+    now.web.get("/login", checkLogged, function (req, res) {
         res.render("login");
     });
-}
 
+    now.web.get("/forgot", checkLogged, function (req, res) {
+        res.render("forgot");
+    });
+
+    now.web.post("/change_password", checkLogged, function (req, res) {
+        var user = req.body;
+        db.changePassword(user.email, user.password, function (err) {
+            if (!err) {
+                res.redirect("login");
+            } else {
+                res.render("error");
+
+            }
+        });
+    });
+
+    now.web.get("/reset_password", checkLogged, function (req, res) {
+        console.log(req.query)
+        var user = req.query;
+        db.getUserByCode(user.code, function (err, row) {
+            if (!row) {
+                res.send("Invalid request");
+            } else {
+                res.render("change_password", {"email" : row.email});
+            }
+        });
+    });
+
+    now.web.post("/forgot", checkLogged, function (req, res) {
+        var email = req.body.email;
+        if (!email) {
+            req.body.msg = "Please enter your email";
+            res.render("forgot", req.body);
+            return;
+        } else {
+            db.getUserByEmail(email, function (err, row) {
+                console.log(row);
+                if (!row) {
+                    req.body.msg = "This email address in not in the system";
+                    res.render("forgot", req.body);
+                    return;
+                } else {
+                    row.subject = "Reset Password";
+                    now.mailer.sendMail(row, "forgot_password", function (err) {
+                        if (err) {
+                            res.render("error");
+                            return;
+                        } else {
+                            req.body.msg = "Please check your mailbox for further instruction";
+                            res.render("forgot", req.body);
+                            return;
+                        }
+                    })
+                }
+            });
+        }
+    });
+}
 
 
 function setupPassport() {
@@ -90,8 +147,8 @@ function setupPassport() {
             usernameField: 'email',
             passwordField: 'password'
         },
-        function(email, password, done) {
-            db.getUserByEmail(email, function(err, row) {
+        function (email, password, done) {
+            db.getUserByEmail(email, function (err, row) {
                 if (row && row.password === password) {
                     return done(err, row);
                 }
@@ -101,7 +158,12 @@ function setupPassport() {
     ));
 
     function loginOrRegisterOauth(oauthProfile, done) {
+<<<<<<< HEAD
         now.db.getUserByEmail(oauthProfile.profile.email, function(err, row) {
+=======
+
+        now.db.getUserByEmail(oauthProfile.profile.email, function (err, row) {
+>>>>>>> fd6ca132fe05d0baec80d22a6b29b8f8cf37f47b
             if (err) return done(err);
 
             if (row) {
@@ -110,7 +172,8 @@ function setupPassport() {
                     userCode: row.code,
                     profileId: oauthProfile.profile.id,
                     provider: oauthProfile.provider
-                }, function() {});
+                }, function () {
+                });
 
                 done(null, row);
                 return;
@@ -144,7 +207,7 @@ function setupPassport() {
             profileFields: ['id', 'displayName', 'photos', 'emails'],
             passReqToCallback: true
         },
-        function(request, accessToken, refreshToken, profile, done) {
+        function (request, accessToken, refreshToken, profile, done) {
             loginOrRegisterOauth(exportOauthProfile("facebook", profile), done);
         }
     ));
@@ -156,16 +219,16 @@ function setupPassport() {
             profileFields: ['id', 'displayName', 'photos', 'emails'],
             passReqToCallback: true
         },
-        function(request, accessToken, refreshToken, profile, done) {
+        function (request, accessToken, refreshToken, profile, done) {
             loginOrRegisterOauth(exportOauthProfile("google", profile), done);
         }
     ));
 
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function (user, done) {
         done(null, user);
     });
 
-    passport.deserializeUser(function(user, done) {
+    passport.deserializeUser(function (user, done) {
         done(null, user);
     });
     now.web.use(passport.initialize());
@@ -180,7 +243,7 @@ function setupPassport() {
         passport.authenticate('facebook', {
             failureRedirect: '/login'
         }),
-        function(req, res) {
+        function (req, res) {
             if (req.user.code) {
                 res.redirect("/");
                 return;
@@ -198,7 +261,7 @@ function setupPassport() {
         passport.authenticate('google', {
             failureRedirect: '/login'
         }),
-        function(req, res) {
+        function (req, res) {
             if (req.user.code) {
                 res.redirect("/");
                 return;
@@ -206,11 +269,11 @@ function setupPassport() {
             res.redirect("/login/#signup");
         });
 
-    now.web.post('/login', function(req, res, next) {
+    now.web.post('/login', function (req, res, next) {
         passport.authenticate('local', {
             successRedirect: '/',
             failureRedirect: '/login'
-        }, function(err, user, info) {
+        }, function (err, user, info) {
             if (err) {
                 return next(err);
             }
@@ -219,7 +282,7 @@ function setupPassport() {
                     msg: "Wrong password!"
                 });
             }
-            req.logIn(user, function(err) {
+            req.logIn(user, function (err) {
                 if (err) {
                     return next(err);
                 }
@@ -228,7 +291,7 @@ function setupPassport() {
         })(req, res, next);
     });
 
-    now.web.get('/logout', function(req, res) {
+    now.web.get('/logout', function (req, res) {
         req.logout();
         res.redirect('/');
     });

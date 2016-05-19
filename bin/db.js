@@ -29,7 +29,11 @@ db.getUserByEmail = function(email, cb) {
     });
 };
 
-
+db.changePassword = function(email, password, cb) {
+    now.mysql.query("UPDATE `User` SET password=? WHERE email=?;", [password, email], function(err) {
+        cb(err);
+    });
+};
 
 db.insertUser = function(model, cb) {
     now.mysql.query("INSERT INTO User SET ?", {

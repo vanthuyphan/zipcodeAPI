@@ -3,7 +3,7 @@ var logger = require("./bin/now/logger.js");
 var mysql = require("./bin/now/mysql.js");
 var web = require("./bin/web.js");
 var db = require("./bin/db.js");
-
+var mailer = require("./bin/mailer.js");
 
 
 var now = {};
@@ -14,25 +14,29 @@ now.app = {
 };
 
 
-exports.init = function(iniFile, app) {
+exports.init = function (iniFile, app) {
     now.app = app;
 
-    ini.init(now, './conf/' + iniFile, function(err) {
+    ini.init(now, './conf/' + iniFile, function (err) {
         if (err) throw err;
 
-        logger.init(now, function(err) {
+        logger.init(now, function (err) {
             if (err) throw err;
 
-            mysql.init(now, function(err) {
+            mysql.init(now, function (err) {
                 if (err) throw err;
 
-                db.init(now, function(err) {
+                db.init(now, function (err) {
                     if (err) throw err;
 
-                    web.init(now, function(err) {
+                    mailer.init(now, function (err) {
                         if (err) throw err;
 
-                        console.log("App link: %s", now.ini.web.url);
+                        web.init(now, function (err) {
+                            if (err) throw err;
+
+                            console.log("App link: %s", now.ini.web.url);
+                        });
                     });
                 });
             });

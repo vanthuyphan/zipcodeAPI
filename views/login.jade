@@ -1,73 +1,37 @@
-doctype html
-html(lang='en')
-	head
-		meta(charset='UTF-8')
-		title Login Page
-		meta(name='msapplication-TileColor', content='#5bc0de')
-		meta(name='msapplication-TileImage', content='assets/img/metis-tile.png')
-		include ./libs.jade
-	body.login
-		.form-signin
-			.text-center
-				img(src='../public/img/logo.png', alt='Metis Logo')
-			hr
-			.tab-content
-				#login.tab-pane.active
-					form(role='form' method="POST")
+extend ./layout.jade
+block head
 
-						p.text-muted.text-center
-						.err=msg
-						input.form-control.top(type='email', placeholder='Email', name="email")
-						input.form-control.bottom(type='password', placeholder='Password', name="password")
-						.checkbox
-							label
-								input(type='checkbox')
-								|  Remember Me
-						button.btn.btn-lg.btn-primary.btn-block(type='submit') Login
-						a.btn.btn-lg.btn-danger.btn-block(href="/login/google") Login using Google
-						a.btn.btn-lg.btn-info.btn-block(href="/login/facebook") Login using Facebook
+block content
+    .container#login-from
+        .row.col-xs-1.col-md-3
+        .row.col-xs-12.col-md-4
+            h1 Login
+            .err=msg
+            form(role='form' method="POST")
+                .form-group
+                    label(for='email') Email:
+                    input#email.form-control(type='email' name="email" value="#{email || ''}")
+                .form-group
+                    label(for='password') Mật khẩu:
+                    input#password.form-control(type='password' name="password")
+                .form-group
+                    input.btn.btn-primary(type='submit' value="Đăng nhập")
+                    a.btn.btn-link(href="/register") Đăng ký
+                    a.btn.btn-link(href="/forgot") Forgot Password
+        .row.col-xs-1.col-md-1
+        .row.col-xs-4.col-md-4
+            form(role='form')
+                .form-group
+                    label(for='email')
+                    a.btn.btn-danger(href="/login/google") Google
+                    a.btn.btn-info(href="/login/facebook") Facebook
 
-				#forgot.tab-pane
-					.msg=msg
-					form(role='form' action="/forgot_password" method="POST")
-						p.text-muted.text-center
-						input.form-control(type='email', placeholder='Email', name="email")
-						br
-						button.btn.btn-lg.btn-danger.btn-block(type='submit') Recover Password
-				#signup.tab-pane
-					.msg=msg
-					form(role='form' action="/register" method="POST")
-						input.form-control.middle(type='text', placeholder='Name', name="name", value="#{name || ''}")
-						input.form-control.middle(type='email', placeholder='Email', name="email", value="#{email || ''}")
-						input.form-control.middle(type='password', placeholder='Password', name="password")
-						button.btn.btn-lg.btn-success.btn-block(type='submit') Register
-			hr
-			.text-center
-				ul.list-inline
-					li
-						a.text-muted(href='#login', data-toggle='tab') Login
-					li
-						a.text-muted(href='#forgot', data-toggle='tab') Forgot Password
-					li
-						a.text-muted(href='#signup', data-toggle='tab') Signup
-		script(type='text/javascript').
-			(function($) {
-				$(document).ready(function() {
-					$('.list-inline li > a').click(function() {
-						var activeForm = $(this).attr('href') + ' > form';
-						//console.log(activeForm);
-						$(activeForm).addClass('animated fadeIn');
-						//set timer to 1 seconds, after that, unload the animate animation
-						setTimeout(function() {
-							$(activeForm).removeClass('animated fadeIn');
-						}, 1000);
-					});
-				});
-				var hash = window.location.hash;
-				if (hash.length > 0) {
-					$('a[role="tab"]').parent().removeClass('active');//remove the default active tab
-					$('a[href="' + hash + '"]').parent().addClass('active');
-					$('.tab-pane').removeClass('active');
-					$(hash).addClass('active');
-				}
-			})(jQuery);
+block page-script
+    style.
+        #login-from {
+            margin-top: 150px;
+        }
+
+        .btn {
+            margin-top: 5px;
+        }
