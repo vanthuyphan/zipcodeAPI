@@ -46,7 +46,7 @@ function setupRegister() {
         db.insertUser(req.body, function(err, row) {
 
             if (err) {
-                if (err.code === 'ER_DUP_ENTRY') { //temp!!!!
+                if (err.code === 'ER_DUP_ENTRY') {
                     req.body.msg = "Email này đã được đăng ký từ trước!";
                     res.render("register", req.body);
                     return;
@@ -101,7 +101,6 @@ function setupPassport() {
     ));
 
     function loginOrRegisterOauth(oauthProfile, done) {
-
         now.db.getUserByEmail(oauthProfile.profile.email, function(err, row) {
             if (err) return done(err);
 
