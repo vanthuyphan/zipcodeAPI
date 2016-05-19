@@ -46,3 +46,6 @@ router.get("/find/:code", function(req, res) {
     });
 });
 
+router.get('/*', function(req, res) {
+    res.render('404')
+});
