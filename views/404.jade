@@ -1,0 +1,26 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title 404
+        meta(name='msapplication-TileColor', content='#5bc0de')
+        meta(name='msapplication-TileImage', content='../public/img/metis-tile.png')
+        // Metis core stylesheet
+        include ./libs.jade
+        link(rel='stylesheet', href='../public/css/main.css')
+        style.
+            body {
+                direction: rtl;
+            }
+    body.error
+        .container
+            .col-lg-8.col-lg-offset-2.text-center
+                .logo
+                    h1 404
+                p.lead.text-muted Trang này không tồn tại .
+                .clearfix
+                br
+                .col-lg-6.col-lg-offset-3
+                    .btn-group.btn-group-justified
+                        a.btn.btn-warning(href='/') Trở lại trang chủ
+            // /.col-lg-8 col-offset-2
