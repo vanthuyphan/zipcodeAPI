@@ -1,52 +1,86 @@
-var express = require("express");
-var router = express.Router();
-
-
-var router_passport = require("./router_passport.js");
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require("passport-facebook").Strategy;
+var GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 var now, db;
 
-var path = require('path');
-
-exports.init = function(_now, cb) {
-    console.log("[routes]");
-
-    _now.router = router;
-
+exports.init = function (_now, cb) {
     now = _now;
     db = now.db;
 
-    router_passport.init(now, function (err) {
-        if(err) throw err;
+    setupPassport();
+    setupRegister();
+    cb();
+}
 
 
-        now.web.use("/", router);
-        cb();
+function setupRegister() {
+
+    function checkLogged(req, res, next) {
+        if(req.user && req.user.code) {
+            res.redirect("/");
+            return;
+        }
+        next();
+    }
+
+    now.web.get("/register", checkLogged, function(req, res) {
+        var model;
+        if (req.user && req.user.oauth) {
+            model = req.user.oauth.profile;
+        }
+        res.render("register", model);
     });
-};
 
-router.use("/", function(req, res, next) {
-    // console.debug(req.user);
-    next();
-});
+    now.web.post("/register", checkLogged,  function(req, res, next) {
+        var input = req.body;
 
+        if (!input.name || !input.email || !input.password) {
+            req.body.msg = "Bạn chưa nhập đủ thông tin!";
+            res.render("register", req.body);
+            return;
+        }
 
-router.get("/", function(req, res) {
-    res.render("index", {
-        user: req.user
+        db.insertUser(req.body, function(err, row) {
+
+            if (err) {
+                if (err.code === 'ER_DUP_ENTRY') { //temp!!!!
+                    req.body.msg = "Email này đã được đăng ký từ trước!";
+                    res.render("register", req.body);
+                    return;
+                }
+                next(err);
+            }
+
+            if (!req.user || !req.user.oauth) {
+                req.session.passport.user = req.body;
+                res.redirect("/");
+                return;
+            }
+
+            if (req.body.email === req.user.oauth.profile.email) {
+                db.insertOauth({
+                    userCode: row.code,
+                    profileId: req.user.oauth.profile.id,
+                    provider: req.user.oauth.provider
+                }, function(err) {
+                    if (err) return next(err);
+
+                    req.session.passport.user = req.body;
+                    res.redirect("/");
+                });
+                return;
+            }
+
+            res.redirect("/");
+        });
     });
-});
 
-
-router.get("/find/:code", function(req, res) {
-    now.db.getUserByCode(req.params.code, function(err, row) {
-        if (err) throw err;
-
-        res.send(row || "Not Found!");
+    now.web.get("/login", checkLogged, function(req, res) {
+        res.render("login");
     });
-});
-
-
+}
 
 
 
@@ -60,26 +94,8 @@ function setupPassport() {
                 if (row && row.password === password) {
                     return done(err, row);
                 }
-                done(err, false, {
-                    msg: "Invalid user message"
-                });
+                done(err, false);
             });
-            // console.log("CHECK LOGIN WITH %s:%s", email, password);
-            // if (email == password) {
-            //     if (email == 'admin') {
-            //         return done(null, {
-            //             id: 123456,
-            //             email: email
-            //         });
-            //     }
-            //     return done(null, {
-            //         id: 1234,
-            //         email: email
-            //     });
-            // };
-            // return done(null, false, {
-            //     message: "Invalid user message"
-            // });
         }
     ));
 
@@ -105,16 +121,6 @@ function setupPassport() {
             });
 
         });
-
-        // now.db.getUserByEmail(oauthProfile.email, function(err, profile) {
-        //     if (err) return done(err);
-
-        //     if (profile) {
-        //         return done(null, profile);
-        //     }
-
-
-        // });
     };
 
     function exportOauthProfile(provider, profile) {
@@ -180,10 +186,6 @@ function setupPassport() {
                 return;
             }
             res.redirect("/register");
-
-            // if (req.query.redirect) {
-            //     return res.redirect(req.query.redirect);
-            // }
         });
 
     now.web.get('/login/google', passport.authenticate('google', {
@@ -202,7 +204,6 @@ function setupPassport() {
                 return;
             }
             res.redirect("/register");
-            // res.redirect('/');
         });
 
     now.web.post('/login', function(req, res, next) {

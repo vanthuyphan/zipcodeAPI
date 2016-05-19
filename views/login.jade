@@ -5,29 +5,31 @@ block content
 	.container#login-from
 		.row.col-xs-1.col-md-3
 		.row.col-xs-12.col-md-4
-			form(role='form')
+			h1 Login
+			.err=msg
+			form(role='form' method="POST")
 				.form-group
 					label(for='email') Email:
-					input#email.form-control(type='email')
+					input#email.form-control(type='email' name="email")
 				.form-group
 					label(for='password') Mật khẩu:
-					input#password.form-control(type='password')
+					input#password.form-control(type='password' name="password")
 				.form-group
-					button.btn.btn-primary() Đăng nhập
+					input.btn.btn-primary(type='submit' value="Đăng nhập")
 					a.btn.btn-link(href="/register") Đăng ký
 		.row.col-xs-1.col-md-1
 		.row.col-xs-4.col-md-4
 			form(role='form')
 				.form-group
 					label(for='email') 
-					button.btn.btn-danger() Google
-					button.btn.btn-info() Facebook
+					a.btn.btn-danger(href="/login/google") Google
+					a.btn.btn-info(href="/login/facebook") Facebook
 
 block page-script
 	style.
 		#login-from {
 			margin-top: 150px;
 		}
-		button {
+		.btn {
 			margin-top : 5px;
 		}

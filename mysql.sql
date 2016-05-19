@@ -17,11 +17,11 @@ CREATE TABLE IF NOT EXISTS `_SessionSqlStore` (
 
 
 
--- DROP TABLE `User`;
+DROP TABLE `User`;
 CREATE TABLE IF NOT EXISTS `User` (
 	`code` BIGINT NOT NULL AUTO_INCREMENT,
 	`id` NVARCHAR(100) UNIQUE,
-	`email` NVARCHAR(100),
+	`email` NVARCHAR(100) UNIQUE,
 	`name` NVARCHAR(100),
 	`gender` INT(2),
 	`phone` NVARCHAR(20),
@@ -30,7 +30,13 @@ CREATE TABLE IF NOT EXISTS `User` (
 ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
-
+DROP TABLE `Oauth`;
+CREATE TABLE IF NOT EXISTS `Oauth` (
+	`userCode` BIGINT NOT NULL,
+	`profileId` BIGINT,
+	`provider` NVARCHAR(50),
+	PRIMARY KEY (`userCode`, `provider`)
+) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 

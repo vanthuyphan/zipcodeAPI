@@ -23,6 +23,10 @@ nav.navbar.navbar-default.navbar-fixed-top
                     li
                         a.page-scroll(href='#team') Team
                     li
-                        a.page-scroll(href='/login') Login
+                        if(user && user.code)
+                            a.page-scroll(href='/logout') Logout
+                        else
+                            a.page-scroll(href='/login') Login
+
             // /.navbar-collapse
         // /.container-fluid
