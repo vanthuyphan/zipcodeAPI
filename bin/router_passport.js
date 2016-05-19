@@ -158,12 +158,7 @@ function setupPassport() {
     ));
 
     function loginOrRegisterOauth(oauthProfile, done) {
-<<<<<<< HEAD
-        now.db.getUserByEmail(oauthProfile.profile.email, function(err, row) {
-=======
-
         now.db.getUserByEmail(oauthProfile.profile.email, function (err, row) {
->>>>>>> fd6ca132fe05d0baec80d22a6b29b8f8cf37f47b
             if (err) return done(err);
 
             if (row) {
