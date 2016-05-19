@@ -186,7 +186,7 @@ function setupPassport() {
                 res.redirect("/");
                 return;
             }
-            res.redirect("/register");
+            res.redirect("/login/#signup");
         });
 
     now.web.get('/login/google', passport.authenticate('google', {
@@ -204,7 +204,7 @@ function setupPassport() {
                 res.redirect("/");
                 return;
             }
-            res.redirect("/register");
+            res.redirect("/login/#signup");
         });
 
     now.web.post('/login', function(req, res, next) {
