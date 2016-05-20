@@ -2,6 +2,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require("passport-facebook").Strategy;
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
+var crypto = require("./crypto.js");
 
 var now, db;
 
@@ -99,9 +100,15 @@ function setupRegister() {
     });
 
     now.web.get("/reset_password", checkLogged, function (req, res) {
-        console.log(req.query)
         var user = req.query;
-        db.getUserByCode(user.code, function (err, row) {
+        var decryptedCode = crypto.decrypt(user.code).split('&');
+        var code = decryptedCode[1];
+        var expiredDate = new Date(decryptedCode[0]);
+        if (expiredDate < new Date()) {
+            res.send("Expired request");
+            return;
+        }
+        db.getUserByCode(code, function (err, row) {
             if (!row) {
                 res.send("Invalid request");
             } else {
@@ -127,6 +134,9 @@ function setupRegister() {
                     return;
                 } else {
                     row.subject = "Reset Password";
+                    var date = new Date();
+                    var expiredDate = date.setDate(date.getDate() + 1);
+                    row.code = crypto.encrypt(expiredDate.toString() + "&" + row.code);
                     now.mailer.sendMail(row, "forgot_password", function (err) {
                         if (err) {
                             res.render("error");
