@@ -9,11 +9,15 @@ var mailOptions;
 exports.init = function (_now, cb) {
     now = _now;
     now.mailer = mailer;
-    smtpTransport = nodemailer.createTransport('SMTP', {
-        service: 'Gmail',
-        auth: {
-            user: now.ini.gmail.user,
-            pass: now.ini.gmail.password
+    smtpTransport = nodemailer.createTransport("SMTP",{
+        service:"Gmail",
+        auth:{
+            XOAuth2: {
+                user: now.ini.gmail.user,
+                clientId: now.ini.google.clientId,
+                clientSecret: now.ini.google.clientSecret,
+                refreshToken: now.ini.google.refresh_token
+            }
         }
     });
     cb();

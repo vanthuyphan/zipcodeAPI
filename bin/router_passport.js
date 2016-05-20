@@ -93,7 +93,7 @@ function setupRegister() {
                 res.redirect("login");
             } else {
                 res.render("error");
-
+                throw err;
             }
         });
     });
@@ -118,7 +118,9 @@ function setupRegister() {
             return;
         } else {
             db.getUserByEmail(email, function (err, row) {
-                console.log(row);
+                if (err) {
+                    throw err;
+                }
                 if (!row) {
                     req.body.msg = "This email address in not in the system";
                     res.render("forgot", req.body);
@@ -128,7 +130,7 @@ function setupRegister() {
                     now.mailer.sendMail(row, "forgot_password", function (err) {
                         if (err) {
                             res.render("error");
-                            return;
+                            throw err;
                         } else {
                             req.body.msg = "Please check your mailbox for further instruction";
                             res.render("forgot", req.body);
@@ -243,7 +245,7 @@ function setupPassport() {
                 res.redirect("/");
                 return;
             }
-            res.redirect("/login/#signup");
+            res.redirect("/register");
         });
 
     now.web.get('/login/google', passport.authenticate('google', {
@@ -261,7 +263,7 @@ function setupPassport() {
                 res.redirect("/");
                 return;
             }
-            res.redirect("/login/#signup");
+            res.redirect("/register");
         });
 
     now.web.post('/login', function (req, res, next) {
