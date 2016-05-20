@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `User` (
 	`gender` INT(2),
 	`phone` NVARCHAR(20),
 	`password` NVARCHAR(100),
+	`verified` BOOLEAN,
 	PRIMARY KEY (`code`)
 ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -39,12 +40,11 @@ CREATE TABLE IF NOT EXISTS `User` (
 -- DROP TABLE `Oauth`;
 CREATE TABLE IF NOT EXISTS `Oauth` (
 	`userCode` BIGINT NOT NULL,
-	`profileId` BIGINT,
+	`profileId` VARCHAR(50),
 	`provider` NVARCHAR(50),
 	PRIMARY KEY (`userCode`, `provider`)
 ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 
-INSERT INTO `User` VALUES (1, 'v4n', 'van@gmail.com', 'Van Phan', 0, '12345');
-INSERT INTO `User` VALUES (1, 'v4n', 'van@gmail.com', 'Van Phan', 0, '12345', '12345');
+INSERT INTO `User` VALUES (1, 'v4n', 'van@gmail.com', 'Van Phan', 0, '12345', '12345', 0);

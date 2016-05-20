@@ -35,11 +35,18 @@ db.changePassword = function(email, password, cb) {
     });
 };
 
+db.verifyUser = function(code, cb) {
+    now.mysql.query("UPDATE `User` SET verified=true WHERE code=?;", [code], function(err) {
+        cb(err);
+    });
+};
+
 db.insertUser = function(model, cb) {
     now.mysql.query("INSERT INTO User SET ?", {
         email: model.email,
         name: model.name,
-        password: model.password
+        password: model.password,
+        verified: model.verified
     }, function(err, result) {
         if (result) {
             model.code = result.insertId;

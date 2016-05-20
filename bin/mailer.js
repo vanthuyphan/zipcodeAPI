@@ -31,11 +31,12 @@ mailer.sendMail = function (data ,template, cb) {
             cb(err);
         }
         else {
+            data.baseUrl = now.ini.web.url;
             var compiledTmpl = jade.compile(file, {filename: template});
             var html = compiledTmpl(data);
 
             mailOptions = {
-                from: 'cafe2sales@gmail.com',
+                from: now.ini.gmail.user,
                 to: data.email,
                 subject: data.subject,
                 html: html

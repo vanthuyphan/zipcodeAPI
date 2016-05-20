@@ -44,6 +44,11 @@ function setupRegister() {
             return;
         }
 
+        if (req.user && req.user.oauth)  {
+            req.body.verified = true;
+        } else {
+            req.body.verified = false;
+        }
         db.insertUser(req.body, function (err, row) {
 
             if (err) {
@@ -56,8 +61,17 @@ function setupRegister() {
             }
 
             if (!req.user || !req.user.oauth) {
-                req.session.passport.user = req.body;
-                res.redirect("/");
+                row.subject = "Activate Your Account";
+                row.code = crypto.encrypt(row.code.toString());
+                now.mailer.sendMail(row, "activateAccount", function (err) {
+                    if (err) {
+                        res.render("error");
+                        throw err;
+                    } else {
+                        req.body.msg = "Please check your mailbox to verify your account";
+                        res.render("register", req.body);
+                    }
+                })
                 return;
             }
 
@@ -81,6 +95,16 @@ function setupRegister() {
 
     now.web.get("/login", checkLogged, function (req, res) {
         res.render("login");
+    });
+
+    now.web.get("/activate", checkLogged, function (req, res) {
+        db.verifyUser(crypto.decrypt(req.query.code), function(err) {
+            if (err) {
+                throw err;
+            } else {
+                res.redirect("/login");
+            }
+        })
     });
 
     now.web.get("/forgot", checkLogged, function (req, res) {
@@ -287,6 +311,11 @@ function setupPassport() {
             if (!user) {
                 return res.render('login', {
                     msg: "Wrong password!"
+                });
+            }
+            if (!user.verified) {
+                return res.render('login', {
+                    msg: "Your account has not been activated yet!"
                 });
             }
             req.logIn(user, function (err) {
