@@ -8,7 +8,9 @@ exports.init = function(_now, cb) {
     now.db = db;
     cb();
 }
-
+/**
+ * User
+ */
 db.getUserByCode = function(code, cb) {
     now.mysql.query("SELECT * FROM `User` WHERE code=? LIMIT 1;", [code], function(err, rows) {
         if (rows) {
@@ -55,6 +57,20 @@ db.insertUser = function(model, cb) {
     });
 };
 
+db.getUsers = function(cb) {
+    now.mysql.query("SELECT * FROM `User`;", function(err, rows) {
+        if (rows) {
+            cb(err, rows);
+        } else {
+            cb(err);
+        }
+    });
+};
+
+/**
+ * Oauth
+ */
+
 db.insertOauth = function(model, cb) {
     now.mysql.query("INSERT INTO Oauth SET ?", {
         userCode: model.userCode,
@@ -66,12 +82,31 @@ db.insertOauth = function(model, cb) {
 
 };
 
-db.getUsers = function(cb) {
-    now.mysql.query("SELECT * FROM `User`;", function(err, rows) {
+/**
+ * Category
+ */
+
+db.insertCategory = function(name, cb) {
+    now.mysql.query("INSERT INTO `Category` SET ?", {
+        name: name,
+    }, function(err, result) {
+        cb(err);
+    });
+
+};
+
+db.getCategories = function(cb) {
+    now.mysql.query("SELECT * FROM `Category`;", function(err, rows) {
         if (rows) {
             cb(err, rows);
         } else {
             cb(err);
         }
+    });
+};
+
+db.deleteCategory = function(code, cb) {
+    now.mysql.query("DELETE FROM `Category` where code=?;", [code], function(err) {
+        cb(err);
     });
 };
