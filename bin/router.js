@@ -38,6 +38,15 @@ router.get("/", function(req, res) {
 });
 
 
+router.get("/users", function(req, res) {
+    now.db.getUsers(function(err, rows) {
+       if (err) throw err;
+       res.render("users", {"users": rows});
+    })
+
+});
+
+
 router.get("/find/:code", function(req, res) {
     now.db.getUserByCode(req.params.code, function(err, row) {
         if (err) throw err;
