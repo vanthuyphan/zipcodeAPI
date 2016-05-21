@@ -1,0 +1,4 @@
+
+DROP TABLE IF EXISTS `_SessionSqlStore`;
+DROP TABLE IF EXISTS `User`;
+DROP TABLE IF EXISTS `Oauth`;
