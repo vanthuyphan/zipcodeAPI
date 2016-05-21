@@ -65,3 +65,13 @@ db.insertOauth = function(model, cb) {
     });
 
 };
+
+db.getUsers = function(cb) {
+    now.mysql.query("SELECT * FROM `User`;", function(err, rows) {
+        if (rows) {
+            cb(err, rows);
+        } else {
+            cb(err);
+        }
+    });
+};

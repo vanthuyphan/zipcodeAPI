@@ -1,0 +1,45 @@
+extend ./layout.jade
+block head
+
+block content
+    .container#login-from
+        .row.col-xs-1.col-md-3
+        .row.col-xs-12.col-md-4
+            .h1 Users
+            .msg=msg
+            div
+                table#table
+                    thead
+                        tr: th #
+                            th Name
+                            th Email
+                    tbody
+                        each user, index in users
+                            tr
+                                td=index + 1
+                                td=user.name
+                                td=user.email
+
+block page-script
+    style.
+        #login-from {
+            margin-top: 150px;
+        }
+
+        button {
+            margin-top: 5px;
+        }
+
+        .msg {
+            margin: 5px;
+            color: red;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            height: 50px;
+        }
