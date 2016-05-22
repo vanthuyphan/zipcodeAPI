@@ -136,7 +136,7 @@ function setupRegister() {
             if (!row) {
                 res.send("Invalid request");
             } else {
-                res.render("change_password", {"email" : row.email});
+                res.render("changePassword", {"email" : row.email});
             }
         });
     });
@@ -161,7 +161,7 @@ function setupRegister() {
                     var date = new Date();
                     var expiredDate = date.setDate(date.getDate() + 1);
                     row.code = crypto.encrypt(expiredDate.toString() + "&" + row.code);
-                    now.mailer.sendMail(row, "forgot_password", function (err) {
+                    now.mailer.sendMail(row, "forgotPassword", function (err) {
                         if (err) {
                             res.render("error");
                             throw err;

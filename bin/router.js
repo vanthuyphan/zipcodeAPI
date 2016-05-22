@@ -78,6 +78,22 @@ router.post("/delete_category", function(req, res) {
     })
 });
 
+router.get("/contact_us", function(req, res) {
+    res.render("contactUs");
+});
+
+router.post("/sendMessage", function(req, res) {
+    var input = req.body;
+    input.subject = "Client Query";
+    console.log(input.message);
+    input.to = now.ini.gmail.user;
+    now.mailer.sendMail(input, "clientQuery", function(err) {
+        if (err) throw err;
+        req.body.msg = "Thank you. Got it. Get back to you soon";
+        res.render("contactUs", req.body);
+    })
+});
+
 router.get('/*', function(req, res) {
     res.render('404')
 });

@@ -37,7 +37,7 @@ mailer.sendMail = function (data ,template, cb) {
 
             mailOptions = {
                 from: now.ini.gmail.user,
-                to: data.email,
+                to: data.to || data.email,
                 subject: data.subject,
                 html: html
             };

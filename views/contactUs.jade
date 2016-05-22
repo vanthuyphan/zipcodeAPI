@@ -1,0 +1,44 @@
+extend ./layout.jade
+block head
+
+block content
+    .container#contact-form
+        .row
+            .col-lg-12.text-center
+                h2.section-heading Contact Us
+                .msg=msg
+        .row
+            .col-lg-12
+                form#contactForm(action='sendMessage', method='POST')
+                    .row
+                        .col-md-6
+                            .form-group
+                                input#name.form-control(type='text', placeholder='Your Name *', required='', name='name', data-validation-required-message='Please enter your name.')
+                                p.help-block.text-danger
+                            .form-group
+                                input#email.form-control(type='email', placeholder='Your Email *', required='', name='email', data-validation-required-message='Please enter your email address.')
+                                p.help-block.text-danger
+                        .col-md-6
+                            .form-group
+                                textarea#message.form-control(placeholder='Your Message *', required='', name='message', data-validation-required-message='Please enter a message.')
+                                p.help-block.text-danger
+                        .clearfix
+                        .col-lg-12.text-center
+                            #success
+                            button.btn.btn-xl(type='submit') Send Message
+
+block page-script
+    style.
+        #contact-form {
+            margin-top: 150px;
+        }
+
+        button {
+            margin-top: 5px;
+        }
+
+        .msg {
+            margin: 5px;
+            color: red;
+        }
+
