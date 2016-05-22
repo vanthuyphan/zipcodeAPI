@@ -1,0 +1,31 @@
+extend ./layout.jade
+block head
+
+block content
+    .container#login-from
+        .row
+            h1= user.name
+
+block page-script
+    style.
+        #login-from {
+            margin-top: 150px;
+        }
+
+        button {
+            margin-top: 5px;
+        }
+
+        .msg {
+            margin: 5px;
+            color: red;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            height: 50px;
+        }

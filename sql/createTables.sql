@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `User` (
 	`phone` NVARCHAR(20),
 	`password` NVARCHAR(100),
 	`verified` BOOLEAN,
+	`stype` INT(2) DEFAULT 0,
 	PRIMARY KEY (`code`)
 ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -137,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `UserArea` (
 	`code` BIGINT NOT NULL AUTO_INCREMENT,
 	`userCode` BIGINT,
 	`areaCode` BIGINT,
-	PRIMARY KEY (`code`),
+	PRIMARY KEY (`code`)
 ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `Product` (

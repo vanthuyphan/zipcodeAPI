@@ -1,0 +1,21 @@
+extend ./layout.jade
+block head
+
+block content
+    .container.main-form
+        .row.col-xs-2.col-md-3
+        .row.col-xs-10.col-md-6
+            .row
+                a.btn.btn-big.btn-info.col-xs-5(href="/user/init/seller") Đại lý bán hàng
+                .col-xs-2
+                a.btn.btn-big.btn-danger.col-xs-5(href="/user/init/supplier") Nhà cung cấp
+
+block page-script
+    style.
+        .main-form {
+            margin-top: 150px;
+        }
+        .main-form a{
+            line-height: 300px;
+
+        }

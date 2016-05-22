@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-
+var router_user = require("./router_user.js");
 var router_passport = require("./router_passport.js");
 
 var now, db;
@@ -16,22 +16,30 @@ exports.init = function(_now, cb) {
     now = _now;
     db = now.db;
 
-    router_passport.init(now, function (err) {
-        if(err) throw err;
-
+    router_passport.init(now, function(err) {
+        if (err) throw err;
 
         now.web.use("/", router);
-        cb();
+        router_user.init(now, function(err) {
+            if (err) throw err;
+            
+            cb();
+        });
     });
 };
 
-router.use("/", function(req, res, next) {
+router.use(function(req, res, next) {
     // console.debug(req.user);
     next();
 });
 
 
 router.get("/", function(req, res) {
+    if (req.user && req.user.code) {
+        res.redirect("/user");
+        return;
+    }
+
     res.render("index", {
         user: req.user
     });
@@ -47,12 +55,12 @@ router.get("/find/:code", function(req, res) {
 });
 
 /**
- * Admin
+ * Admin // We should seperate addmin stuffs to another project, Van.
  */
 router.get("/users", function(req, res) {
     now.db.getUsers(function(err, rows) {
         if (err) throw err;
-        res.render("users", {"users": rows});
+        res.render("users", { "users": rows });
     })
 
 });
@@ -60,7 +68,7 @@ router.get("/users", function(req, res) {
 router.get("/categories", function(req, res) {
     now.db.getCategories(function(err, rows) {
         if (err) throw err;
-        res.render("categories", {"categories": rows});
+        res.render("categories", { "categories": rows });
     })
 
 });
@@ -85,10 +93,10 @@ router.post("/sendMessage", function(req, res) {
     input.to = now.ini.gmail.user;
     now.mailer.sendMail(input, "clientQuery", function(err) {
         if (err) throw err;
-        res.render("info", {"message" : "Thank you. Got the message. Get back to you soon"});
+        res.render("info", { "message": "Thank you. Got the message. Get back to you soon" });
     })
 });
 
-router.get('/*', function(req, res) {
-    res.render('404')
-});
+// router.get('/*', function(req, res) {
+//     res.render('404')
+// });
