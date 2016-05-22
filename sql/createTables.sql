@@ -133,4 +133,46 @@ INSERT INTO Area (name) VALUES ('Nước ngoài');
 INSERT INTO Area (name) VALUES ('Toàn Quốc');
 INSERT INTO Area (name) VALUES ('Shop Online');
 
+CREATE TABLE IF NOT EXISTS `UserArea` (
+	`code` BIGINT NOT NULL AUTO_INCREMENT,
+	`userCode` BIGINT,
+	`areaCode` BIGINT,
+	PRIMARY KEY (`code`),
+) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `Product` (
+	`code` BIGINT NOT NULL AUTO_INCREMENT,
+	`createdDate` DATE,
+	`expiredDate` DATE,
+	`creator` BIGINT,
+	`price` BIGINT,
+	`name` NVARCHAR(500),
+	`content` NVARCHAR(5000),
+	`brand` NVARCHAR(200),
+	PRIMARY KEY (`code`)
+) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `ProductCategory` (
+	`code` BIGINT NOT NULL AUTO_INCREMENT,
+	`productCode` BIGINT,
+	`categoryCode` BIGINT,
+	 PRIMARY KEY (`code`)
+) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `Media` (
+	`code` BIGINT NOT NULL AUTO_INCREMENT,
+	`title` VARCHAR(50),
+	`url` VARCHAR(100),
+	`mimeType` VARCHAR(50),
+	 PRIMARY KEY (`code`)
+) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `ProductMedia` (
+	`code` BIGINT NOT NULL AUTO_INCREMENT,
+	`productCode` BIGINT,
+	`mediaCode` BIGINT,
+	 PRIMARY KEY (`code`)
+) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
 
