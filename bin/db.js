@@ -110,3 +110,41 @@ db.deleteCategory = function(code, cb) {
         cb(err);
     });
 };
+
+/**
+ * Product
+ */
+
+db.getProducts = function(cb) {
+    now.mysql.query("SELECT * FROM `Product`;", function(err, rows) {
+        if (rows) {
+            cb(err, rows);
+        } else {
+            cb(err);
+        }
+    });
+};
+
+db.insertProduct = function(model, cb) {
+    now.mysql.query("INSERT INTO `Product` SET ?", {
+        createdDate: new Date(),
+        expiredDate: model.expiredDate,
+        creator: model.creator,
+        price: model.price,
+        name: model.name,
+        content: model.content,
+        brand: model.brand,
+    }, function(err, result) {
+        if (result) {
+            model.code = result.insertId;
+        }
+        cb(err, model);
+    });
+};
+
+db.deleteProduct = function(code, cb) {
+    now.mysql.query("DELETE FROM `Product` where code=?;", [code], function(err) {
+        cb(err);
+    });
+};
+

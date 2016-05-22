@@ -97,6 +97,25 @@ router.post("/sendMessage", function(req, res) {
     })
 });
 
-// router.get('/*', function(req, res) {
-//     res.render('404')
-// });
+
+router.get("/products", function(req, res) {
+    now.db.getProducts(function(err, rows) {
+        if (err) throw err;
+        res.render("products", {"products": rows});
+    })
+
+});
+
+router.post("/add_product", function(req, res) {
+    now.db.insertProduct(req.body, function(err) {
+        if (err) throw err;
+        res.redirect("/products");
+    })
+});
+
+router.post("/delete_product", function(req, res) {
+    now.db.deleteProduct(req.body.code, function(err) {
+        if (err) throw err;
+        res.redirect("/products");
+    })
+});
