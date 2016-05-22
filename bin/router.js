@@ -28,7 +28,7 @@ exports.init = function(_now, cb) {
     });
 };
 
-router.use(function(req, res, next) {
+router.get(function(req, res, next) {
     // console.debug(req.user);
     next();
 });

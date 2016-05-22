@@ -50,12 +50,15 @@ exports.init = function(_now, cb) {
     router.init(now, function(err) {
         if (err) throw err;
 
-
         now.router.use(function(err, req, res, next) {
             console.error(err.stack);
             res.status(500).send("System errror!");
             req.next(err);
         });
+
+		now.web.use(function (req, res) {
+			res.status(404).render("404");
+		});
 
         server.listen(now.ini.web.port, now.ini.web.host, function(err) {
             if (err) throw err;
