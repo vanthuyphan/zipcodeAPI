@@ -115,7 +115,7 @@ function setupRegister() {
         var user = req.body;
         db.changePassword(user.email, user.password, function (err) {
             if (!err) {
-                res.redirect("login");
+                res.render("info", {"message": "Your password has been changed. Please login again"});
             } else {
                 res.render("error");
                 throw err;

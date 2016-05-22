@@ -151,6 +151,9 @@ CREATE TABLE IF NOT EXISTS `Product` (
 	`brand` NVARCHAR(200),
 	PRIMARY KEY (`code`)
 ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+insert into Product (creator, name, price, content, brand) values (1, 'Van', 2000000, 'A big quantity of jumbo','Versage')
+insert into Product (creator, name, price, content, brand) values (2, 'Van', 2000000, 'A house in new york', 'Versage')
+insert into Product (creator, name, price, content, brand) values (2, 'Van', 2000000, 'Tea bags for free', 'Versage')
 
 CREATE TABLE IF NOT EXISTS `ProductCategory` (
 	`code` BIGINT NOT NULL AUTO_INCREMENT,
