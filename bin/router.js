@@ -28,8 +28,10 @@ exports.init = function(_now, cb) {
     });
 };
 
-router.get(function(req, res, next) {
-    // console.debug(req.user);
+router.use(function(req, res, next) {
+    console.error("####################");
+    console.error(req.user);
+    res.locals.user = req.user;
     next();
 });
 
@@ -40,9 +42,7 @@ router.get("/", function(req, res) {
         return;
     }
 
-    res.render("index", {
-        user: req.user
-    });
+    res.render("index");
 });
 
 
