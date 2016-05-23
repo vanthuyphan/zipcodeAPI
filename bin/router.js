@@ -54,38 +54,6 @@ router.get("/find/:code", function(req, res) {
     });
 });
 
-/**
- * Admin // We should seperate addmin stuffs to another project, Van.
- */
-router.get("/users", function(req, res) {
-    now.db.getUsers(function(err, rows) {
-        if (err) throw err;
-        res.render("users", { "users": rows });
-    })
-
-});
-
-router.get("/categories", function(req, res) {
-    now.db.getCategories(function(err, rows) {
-        if (err) throw err;
-        res.render("categories", { "categories": rows });
-    })
-
-});
-
-router.post("/add_category", function(req, res) {
-    now.db.insertCategory(req.body.name, function(err) { //ignore the error about name already there
-        res.redirect("/categories");
-    })
-});
-
-router.post("/delete_category", function(req, res) {
-    now.db.deleteCategory(req.body.code, function(err) {
-        if (err) throw err;
-        res.redirect("/categories");
-    })
-});
-
 router.post("/sendMessage", function(req, res) {
     var input = req.body;
     input.subject = "Client Query";
@@ -98,23 +66,8 @@ router.post("/sendMessage", function(req, res) {
 });
 
 
-router.get("/products", function(req, res) {
-    now.db.getProducts(function(err, rows) {
-        if (err) throw err;
-        res.render("products", {"products": rows});
-    })
-
-});
-
 router.post("/add_product", function(req, res) {
     now.db.insertProduct(req.body, function(err) {
-        if (err) throw err;
-        res.redirect("/products");
-    })
-});
-
-router.post("/delete_product", function(req, res) {
-    now.db.deleteProduct(req.body.code, function(err) {
         if (err) throw err;
         res.redirect("/products");
     })
