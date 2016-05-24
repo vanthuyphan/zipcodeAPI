@@ -29,8 +29,6 @@ exports.init = function(_now, cb) {
 };
 
 router.use(function(req, res, next) {
-    console.error("####################");
-    console.error(req.user);
     res.locals.user = req.user;
     next();
 });
