@@ -44,6 +44,11 @@ router.get("/", function(req, res) {
 });
 
 
+router.get("/home", function(req, res) {
+    res.render("home");
+});
+
+
 router.get("/find/:code", function(req, res) {
     now.db.getUserByCode(req.params.code, function(err, row) {
         if (err) throw err;
