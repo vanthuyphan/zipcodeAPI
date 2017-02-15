@@ -158,6 +158,10 @@ body {
     float: right;
   }
 }
+
+.navbar-default {
+  padding: 0px 0;
+}
 /* END TOP bar */
 /* BEGIN header.head bar */
 .head {
