@@ -83,68 +83,15 @@ db.insertOauth = function(model, cb) {
 };
 
 /**
- * Category
+ * Zipcode
  */
-
-db.insertCategory = function(name, cb) {
-    now.mysql.query("INSERT INTO `Category` SET ?", {
-        name: name,
-    }, function(err, result) {
-        cb(err);
-    });
-
-};
-
-db.getCategories = function(cb) {
-    now.mysql.query("SELECT * FROM `Category`;", function(err, rows) {
+db.getZipcode = function(code, cb) {
+    now.mysql.query("SELECT * FROM `Zipcode` WHERE code=? LIMIT 1;", [code], function(err, rows) {
         if (rows) {
-            cb(err, rows);
+            cb(err, rows[0]);
         } else {
             cb(err);
         }
-    });
-};
-
-db.deleteCategory = function(code, cb) {
-    now.mysql.query("DELETE FROM `Category` where code=?;", [code], function(err) {
-        cb(err);
-    });
-};
-
-/**
- * Product
- */
-
-db.getProducts = function(cb) {
-    now.mysql.query("SELECT * FROM `Product`;", function(err, rows) {
-        if (rows) {
-            cb(err, rows);
-        } else {
-            cb(err);
-        }
-    });
-};
-
-db.insertProduct = function(model, cb) {
-    now.mysql.query("INSERT INTO `Product` SET ?", {
-        createdDate: new Date(),
-        expiredDate: model.expiredDate,
-        creator: model.creator,
-        price: model.price,
-        name: model.name,
-        content: model.content,
-        brand: model.brand,
-    }, function(err, result) {
-        if (result) {
-            model.code = result.insertId;
-        }
-        cb(err, model);
-    });
-};
-
-db.deleteProduct = function(code, cb) {
-    now.mysql.query("DELETE FROM `Product` where code=?;", [code], function(err) {
-        cb(err);
     });
 };
 

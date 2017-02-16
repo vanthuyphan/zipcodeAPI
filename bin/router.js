@@ -50,6 +50,14 @@ router.get("/", function(req, res) {
     res.render("index");
 });
 
+router.get("/zip", function(req, res) {
+    var zip = req.body.zip;
+    now.db.getZipcode(zip, function (error, row) {
+        if (error) throw error;
+        res.send(row || {error: "Invalid Zipcode"})
+    })
+});
+
 
 
 
