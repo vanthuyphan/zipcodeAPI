@@ -25,7 +25,7 @@ router.get("/", function(req, res) {
 });
 
 router.get("/zip", function(req, res) {
-    var zip = req.zip;
+    var zip = req.param('zip');
     now.db.getZipcode(zip, function (error, row) {
         if (error) throw error;
         res.send(row || {error: "Invalid Zipcode"})
