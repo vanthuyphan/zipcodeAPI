@@ -41,6 +41,10 @@ INSERT INTO `User` VALUES (1, 'v4n', 'van@gmail.com', 'Van Phan', 0, '12345', '1
         `limit2` INT,
         `limit3` INT,
         `limit4` INT,
+        `FHALimit1` INT,
+        `FHALimit2` INT,
+        `FHALimit3` INT,
+        `FHALimit4` INT,
         PRIMARY KEY (`code`)
     ) ENGINE MyISAM DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 

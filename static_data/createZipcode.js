@@ -19,12 +19,32 @@ for (var i = 2; i < 3235; i++) {
 
 var zipCountyMap = JSON.parse(fs.readFileSync('zip-county-map.txt', 'utf8'));
 var limitZipMap = {};
+
+var countyCodeMap = JSON.parse(fs.readFileSync('county-code-map.txt', 'utf8'));
+var lines = fs.readFileSync('FHA-limit.txt').toString().split("\n");
+var fhaLimits = {};
+for (var i = 0 ; i < lines.length; i++) {
+    var line = lines[i];
+    var code = line.substring(103, 106);
+    var state = line.substring(106, 132).trim();
+    var countyCode = countyCodeMap[code + state];
+    var limit1 = line.substring(74, 80);
+    var limit2 = line.substring(81, 87);
+    var limit3 = line.substring(88, 94);
+    var limit4 = line.substring(95, 101);
+    fhaLimits[countyCode] = {limit1: limit1,  limit2: limit2, limit3: limit3, limit4: limit4}
+
+}
 for (var key in zipCountyMap) {
     var countyLimit = limit[zipCountyMap[key]] || {};
-    limitZipMap[key] = {code: key, limit1: countyLimit.limit1, limit2: countyLimit.limit2, limit3: countyLimit.limit3, limit4: countyLimit.limit4}
+    var FHALImit = fhaLimits[zipCountyMap[key]] || {};
+    limitZipMap[key] = {code: key, limit1: countyLimit.limit1, limit2: countyLimit.limit2, limit3: countyLimit.limit3, limit4: countyLimit.limit4,
+    FHALimit1: FHALImit.limit1, FHALimit2: FHALImit.limit2, FHALimit3: FHALImit.limit3, FHALimit4: FHALImit.limit4}
 
 }
 stringFormat.extendString();
+
+
 
 var zipStateCityMap = {};
 csv({noheader:true})
@@ -35,9 +55,10 @@ csv({noheader:true})
     .on('done',function() {
         var toFile = [];
         for (var key in limitZipMap) {
-            toFile.push('INSERT INTO Zipcode(code, city, state, limit1, limit2, limit3, limit4) VALUES ({0}, \'{1}\', \'{2}\', {3}, {4}, {5}, {6});'.format(key, zipStateCityMap[key].city, zipStateCityMap[key].state,
-                limitZipMap[key].limit1, limitZipMap[key].limit2, limitZipMap[key].limit3, limitZipMap[key].limit4))
-
+            var limitZipMap2 = limitZipMap[key];
+            toFile.push('INSERT INTO Zipcode(code, city, state, limit1, limit2, limit3, limit4, FHALimit1, FHALimit2, FHALimit3, FHALimit4) VALUES ({0}, \'{1}\', \'{2}\', {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10});'.format(key, zipStateCityMap[key].city, zipStateCityMap[key].state,
+                limitZipMap2.limit1, limitZipMap2.limit2, limitZipMap2.limit3, limitZipMap2.limit4,
+                limitZipMap2.FHALimit1, limitZipMap2.FHALimit2, limitZipMap2.FHALimit3, limitZipMap2.FHALimit4))
         }
 
         var file = fs.createWriteStream('../sql/zipcodeTable.sql');
