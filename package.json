@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.1",
+    "crypto": "0.0.3",
+    "csvtojson": "^1.1.4",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "jade": "^1.11.0",
@@ -17,12 +19,13 @@
     "log4js": "^0.6.36",
     "mysql": "^2.10.2",
     "node-ini": "^1.0.0",
+    "nodemailer": "^0.7.1",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth2": "^0.1.6",
-    "requestify": "^0.2.5",
     "passport-local": "^1.0.0",
-    "nodemailer": "^0.7.1",
-    "crypto": "0.0.3"
+    "requestify": "^0.2.5",
+    "stringformat": "0.0.5",
+    "xlsx": "^0.8.3"
   }
 }
